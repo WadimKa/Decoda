@@ -1,7 +1,9 @@
 package com.wadimkazak.locker;
 
+import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -24,6 +26,11 @@ public class WorkText {
     public static WorkText workText;
     private final String TAG = "WorkText";
     private String text, key;
+    private Context context;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     public void setKey(String key) {
         this.key = key;
@@ -60,16 +67,22 @@ public class WorkText {
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            Toast.makeText(context, "No such Algorithm", Toast.LENGTH_SHORT).show();
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
+            Toast.makeText(context, "No such Padding", Toast.LENGTH_SHORT).show();
         } catch (InvalidKeyException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Invalid key. Key must be at least 16 characters", Toast.LENGTH_SHORT).show();
         } catch (BadPaddingException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Bad padding", Toast.LENGTH_SHORT).show();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Illegal block size", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(context, "Error. You do something wrong", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -89,16 +102,22 @@ public class WorkText {
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            Toast.makeText(context, "No such Algorithm", Toast.LENGTH_SHORT).show();
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
+            Toast.makeText(context, "No such Padding", Toast.LENGTH_SHORT).show();
         } catch (InvalidKeyException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Invalid key. Key must be at least 16 characters", Toast.LENGTH_SHORT).show();
         } catch (BadPaddingException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Bad padding", Toast.LENGTH_SHORT).show();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Illegal block size", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(context, "Error. You do something wrong", Toast.LENGTH_SHORT).show();
         }
     }
 

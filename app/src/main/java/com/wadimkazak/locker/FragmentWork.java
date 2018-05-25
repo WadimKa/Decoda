@@ -27,6 +27,7 @@ public class FragmentWork extends Fragment {
                 WorkText workText = WorkText.get();
                 workText.setText(editTextWithMainText.getText().toString());
                 workText.setKey(editTextWithKey.getText().toString());
+                workText.setContext(getActivity());
                 workText.lockText();
                 editTextWithMainText.setText(workText.getText());
                 workText.setText("");
@@ -42,6 +43,7 @@ public class FragmentWork extends Fragment {
                 WorkText workText = WorkText.get();
                 workText.setText(editTextWithMainText.getText().toString());
                 workText.setKey(editTextWithKey.getText().toString());
+                workText.setContext(getActivity());
                 workText.unlockText();
                 editTextWithMainText.setText(workText.getText());
                 workText.setText("");
