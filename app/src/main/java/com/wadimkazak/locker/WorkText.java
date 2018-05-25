@@ -13,6 +13,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
@@ -23,19 +24,20 @@ public class WorkText {
     public static WorkText workText;
     private final String TAG = "WorkText";
     private String text, key;
-    private SecretKeySpec secretKeySpec = null;
 
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-    public static WorkText get(String text, String key) {
+    public static WorkText get() {
         if (workText == null) {
-            workText = new WorkText(text, key);
+            workText = new WorkText();
         }
+
         return workText;
     }
 
-    private WorkText(String text, String key) {
-        this.text = text;
-        this.key = key;
+    private WorkText() {
     }
 
     public String getText() {
@@ -47,65 +49,57 @@ public class WorkText {
     }
 
     public void lockText() {
+        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
         try {
-            createSpecKey();
-
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-            byte[] encodedArray = cipher.doFinal(text.getBytes());
-            text = Base64.encodeToString(encodedArray, Base64.DEFAULT);
-
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+            byte[] encryptArr = cipher.doFinal(text.getBytes());
+            text = "";
+            for (byte a : encryptArr) {
+                text += a + " ";
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            Log.e(TAG, "No such Algo");
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
-            Log.e(TAG, "No such padding exception");
         } catch (InvalidKeyException e) {
             e.printStackTrace();
-            Log.e(TAG, "Invalid key");
         } catch (BadPaddingException e) {
             e.printStackTrace();
-            Log.e(TAG, "Bad padding");
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
-            Log.e(TAG, "Illegal block size");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }
 
     public void unlockText() {
+        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
         try {
-            createSpecKey();
-
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            byte[] arr = cipher.doFinal(Base64.decode(text, Base64.CRLF));
-            text = new String(arr);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec);
+            String[] encryptArrOfStrings = text.split(" ");
+            byte[] decodedArrayOfBytes = new byte[encryptArrOfStrings.length];
+            for (int i = 0; i < encryptArrOfStrings.length; i++) {
+                decodedArrayOfBytes[i] = Byte.valueOf(encryptArrOfStrings[i]);
+            }
+            text = new String(cipher.doFinal(decodedArrayOfBytes));
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            Log.e(TAG, "No such Algo");
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
-            Log.e(TAG, "No such padding exception");
         } catch (InvalidKeyException e) {
             e.printStackTrace();
-            Log.e(TAG, "Invalid key");
         } catch (BadPaddingException e) {
             e.printStackTrace();
-            Log.e(TAG, "Bad padding");
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
-            Log.e(TAG, "Illegal block size");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    private void createSpecKey() throws NoSuchAlgorithmException {
-        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
-        secureRandom.setSeed(key.getBytes());
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(128, secureRandom);
-        secretKeySpec = new SecretKeySpec(keyGenerator.generateKey().getEncoded(), "AES");
     }
 
 

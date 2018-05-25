@@ -24,9 +24,12 @@ public class FragmentWork extends Fragment {
         btnLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WorkText workText = WorkText.get(editTextWithMainText.getText().toString(), editTextWithKey.getText().toString());
+                WorkText workText = WorkText.get();
+                workText.setText(editTextWithMainText.getText().toString());
+                workText.setKey(editTextWithKey.getText().toString());
                 workText.lockText();
                 editTextWithMainText.setText(workText.getText());
+                workText.setText("");
 
 
             }
@@ -36,9 +39,12 @@ public class FragmentWork extends Fragment {
         btnUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WorkText workText = WorkText.get(editTextWithMainText.getText().toString(), editTextWithKey.getText().toString());
+                WorkText workText = WorkText.get();
+                workText.setText(editTextWithMainText.getText().toString());
+                workText.setKey(editTextWithKey.getText().toString());
                 workText.unlockText();
                 editTextWithMainText.setText(workText.getText());
+                workText.setText("");
             }
         });
 
