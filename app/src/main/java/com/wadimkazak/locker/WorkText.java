@@ -73,7 +73,7 @@ public class WorkText {
             Toast.makeText(context, "No such Padding", Toast.LENGTH_SHORT).show();
         } catch (InvalidKeyException e) {
             e.printStackTrace();
-            Toast.makeText(context, "Invalid key. Key must be at least 16 characters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Invalid key. Key must have 16 characters", Toast.LENGTH_SHORT).show();
         } catch (BadPaddingException e) {
             e.printStackTrace();
             Toast.makeText(context, "Bad padding", Toast.LENGTH_SHORT).show();
