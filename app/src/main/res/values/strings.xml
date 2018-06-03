@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">Locker</string>
-    <string name="Lock">Lock</string>
-    <string name="unlock">Unlock</string>
+    <string name="app_name">Encoda</string>
+    <string name="Lock">Code</string>
+    <string name="unlock">Decode</string>
     <string name="enter_your_key">Enter your key</string>
     <string name="enter_the_sixteen_character_key">Enter key</string>
     <string name="enter_text">Enter your text</string>
     <string name="enter_key">Enter key</string>
+    <string name="share_menu">Share</string>
+    <string name="clear">Clear</string>
 </resources>
