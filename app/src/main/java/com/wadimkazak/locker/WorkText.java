@@ -1,9 +1,12 @@
 package com.wadimkazak.locker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -55,7 +58,7 @@ public class WorkText {
             byte[] encryptArr = cipher.doFinal(text.getBytes());
             text = "";
             for (byte a : encryptArr) {
-                text += a + " ";
+                text += (char) a;
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -85,10 +88,10 @@ public class WorkText {
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, keySpec);
-            String[] encryptArrOfStrings = text.split(" ");
+            char[] encryptArrOfStrings =  text.toCharArray();
             byte[] decodedArrayOfBytes = new byte[encryptArrOfStrings.length];
             for (int i = 0; i < encryptArrOfStrings.length; i++) {
-                decodedArrayOfBytes[i] = Byte.valueOf(encryptArrOfStrings[i]);
+                decodedArrayOfBytes[i] = (byte) encryptArrOfStrings[i];
             }
             text = new String(cipher.doFinal(decodedArrayOfBytes));
 
@@ -109,7 +112,7 @@ public class WorkText {
             Toast.makeText(context, "Illegal block size", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Error. You do something wrong", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Error. You do something wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
