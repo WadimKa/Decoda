@@ -9,4 +9,6 @@
     <string name="share_menu">Share</string>
     <string name="clear">Clear</string>
     <string name="count_of_encodings">The number of encodings is redundant</string>
+    <string name="original_text">This is the original appearance of the text</string>
+
 </resources>

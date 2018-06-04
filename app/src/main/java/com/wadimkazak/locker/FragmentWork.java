@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +27,7 @@ public class FragmentWork extends Fragment {
     TextView tvCounter;
     private final String PATH_FONT = "fonts/8289.otf";
     private final String TYPE_INTENT = "text/plain";
-    private int COUNT_OF_ENCODINGS = 0;
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -84,29 +85,23 @@ public class FragmentWork extends Fragment {
         btnLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (COUNT_OF_ENCODINGS < 4) {
-                    if (editTextWithMainText.getText().toString().equals("")) {
-                        Toast.makeText(getActivity(), getString(R.string.enter_text), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (editTextWithKey.getText().toString().equals("")) {
-                        Toast.makeText(getActivity(), R.string.enter_key, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
 
-                    WorkText workText = WorkText.get();
-                    workText.setText(editTextWithMainText.getText().toString());
-                    workText.setKey(editTextWithKey.getText().toString());
-                    workText.setContext(getActivity());
-                    workText.lockText();
-                    editTextWithMainText.setText(workText.getText());
-                    workText.setText("");
-
-                    COUNT_OF_ENCODINGS += 1;
-
-                } else {
-                    Toast.makeText(getActivity(), R.string.count_of_encodings, Toast.LENGTH_SHORT).show();
+                if (editTextWithMainText.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), getString(R.string.enter_text), Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (editTextWithKey.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), R.string.enter_key, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Log.e("TT", String.valueOf(editTextWithKey.getText().toString().hashCode()));
+                WorkText workText = WorkText.get();
+                workText.setText(editTextWithMainText.getText().toString());
+                workText.setKey(editTextWithKey.getText().toString());
+                workText.setContext(getActivity());
+                workText.lockText();
+                editTextWithMainText.setText(workText.getText());
+                workText.setText("");
 
 
             }
@@ -131,7 +126,7 @@ public class FragmentWork extends Fragment {
                 workText.unlockText();
                 editTextWithMainText.setText(workText.getText());
                 workText.setText("");
-                COUNT_OF_ENCODINGS -= 1;
+
             }
         });
 
@@ -139,7 +134,8 @@ public class FragmentWork extends Fragment {
             @Override
             public void onClick(View view) {
                 editTextWithMainText.setText("");
-                COUNT_OF_ENCODINGS = 0;
+                WorkText.COUNT_OF_ENCODINGS = 0;
+
             }
         });
 
