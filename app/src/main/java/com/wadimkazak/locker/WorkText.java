@@ -103,7 +103,7 @@ public class WorkText {
     }
 
     public void unlockText() {
-        if (COUNT_OF_ENCODINGS > 0) {
+        /*if (COUNT_OF_ENCODINGS > 0) {*/
             SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
             try {
                 Cipher cipher = Cipher.getInstance("AES");
@@ -135,9 +135,9 @@ public class WorkText {
                 e.printStackTrace();
                 //Toast.makeText(context, "Error. You do something wrong", Toast.LENGTH_SHORT).show();
             }
-        } else {
+        /*} else {
             Toast.makeText(context, R.string.original_text, Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
 
